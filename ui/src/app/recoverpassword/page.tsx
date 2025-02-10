@@ -17,7 +17,7 @@ const Home = () => {
       setStage(1);
       // try {
       //   const response = await axios.post(
-      //     "http://localhost:8000/otp/GenerateAndSendOtp",
+      //     "http://localhost:8001/otp/GenerateAndSendOtp",
       //     { email }
       //   );
       //   console.log(response);

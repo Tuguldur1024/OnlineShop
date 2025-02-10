@@ -19,12 +19,11 @@ const SignIn = () => {
     }
     try {
       await axios
-        .post("http://localhost:8000/user/Signin", {
+        .post("http://localhost:8001/user/Signin", {
           email: email,
           password: password,
         })
         .then(function (response) {
-          console.log(response.data.user.id);
           signin(response.data.user.id);
           router.push("/");
         })

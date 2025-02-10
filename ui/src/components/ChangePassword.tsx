@@ -46,7 +46,7 @@ export const ChangePassword = ({ email }: VerifyOtpProps) => {
       setColorToo("#71717A");
       try {
         axios
-          .post("http://localhost:8000/user/updatePassword", {
+          .post("http://localhost:8001/user/updatePassword", {
             email,
             password,
           })

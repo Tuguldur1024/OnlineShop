@@ -63,7 +63,7 @@ const SignUp = () => {
         return;
       }
       await axios
-        .post("http://localhost:8000/user/SignUp", {
+        .post("http://localhost:8001/user/SignUp", {
           userName: name,
           email: emailAddress,
           password: password,

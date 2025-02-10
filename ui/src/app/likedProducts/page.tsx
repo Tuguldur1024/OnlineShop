@@ -11,7 +11,7 @@ const LikedProduct = () => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8000/user/getUserById", { id: currentUser })
+        .post("http://localhost:8001/user/getUserById", { id: currentUser })
         .then(function (response) {
           setLikedProducts(response.data.user.savedProducts);
         })

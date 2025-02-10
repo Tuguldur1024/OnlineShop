@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuthContext } from "@/providers/AuthProviders";
 
 type IdQuantity = {
   productId: string;
@@ -28,7 +27,7 @@ export const SecondStepProduct = (props: IdQuantity) => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8000/product/getProductById", { id: productId })
+        .post("http://localhost:8001/product/getProductById", { id: productId })
         .then(function (response) {
           setMyProduct(response.data.product);
         })

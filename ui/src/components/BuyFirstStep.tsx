@@ -22,7 +22,7 @@ const FirstStep: React.FC<StepProps> = ({ next }) => {
       const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCard(currentCart);
       axios
-        .post("http://localhost:8000/product/getCardValue", { currentCart })
+        .post("http://localhost:8001/product/getCardValue", { currentCart })
         .then(function (response) {
           setTotalValue(response.data.totalValue);
         })
