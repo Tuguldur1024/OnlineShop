@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Product from "@/components/Product";
 import BigProduct from "@/components/BigProduct";
 import { useEffect, useState } from "react";
@@ -38,7 +37,6 @@ export default function Home() {
       .then(function (response) {
         const fetchedProducts = response.data.products;
         setProducts(fetchedProducts);
-
         setFrontProducts(fetchedProducts.slice(0, 4));
         setMiddleProducts(fetchedProducts.slice(4, 11));
         setLowerProducts(fetchedProducts.slice(11, 19));
