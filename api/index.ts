@@ -4,6 +4,7 @@ import connection from "./connection";
 import categoryRouter from "./router/category.router";
 import productRouter from "./router/product.router";
 import userRouter from "./router/user.router";
+import otpRouter from "./router/otp.router";
 
 const app = express();
 
@@ -15,6 +16,7 @@ const port = 8000;
 app.use("/category", categoryRouter);
 app.use("/product", productRouter);
 app.use("/user", userRouter);
+app.use("/otp", otpRouter);
 
 connection();
 
