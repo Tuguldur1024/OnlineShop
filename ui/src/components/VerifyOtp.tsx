@@ -24,7 +24,7 @@ export function VerifyOtp({ email, setStage }: VerifyOtpProps) {
   const verifyOtp = async () => {
     setStage(2); // odoohondoo status irj chdq baigaa uchraas shuud yvuulchii daraa ni ene muriig avna
     // try {
-    //   const response = await axios.post("http://localhost:8000/otp/VerifyOtp", {
+    //   const response = await axios.post("http://localhost:8001/otp/VerifyOtp", {
     //     email,
     //     otp,
     //   });

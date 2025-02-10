@@ -25,10 +25,8 @@ const Product = ({ productName, price, _id, images }: product) => {
   const handleLoveClick = async (event: React.MouseEvent) => {
     event.preventDefault();
     if (currentUser) {
-      console.log(currentUser);
-      console.log(_id);
       const updateduser = await axios.post(
-        "http://localhost:8000/user/SaveProducts",
+        "http://localhost:8001/user/SaveProducts",
         {
           id: currentUser,
           productId: _id,

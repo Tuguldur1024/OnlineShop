@@ -7,7 +7,6 @@ const Steps = () => {
   const handleClick = (e: number) => {
     setSelectedNumber(e);
   };
-  console.log(selectedNumber);
   return (
     <div className="flex items-center justify-center">
       <button

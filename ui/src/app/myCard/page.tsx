@@ -2,22 +2,26 @@
 import { useAuthContext } from "@/providers/AuthProviders";
 import FirstStep from "@/components/BuyFirstStep";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SecondStep from "@/components/BuySecondStep";
-import orderDone from "@/components/orderDone";
+import OrderDone from "@/components/OrderDone";
 
 const MyCard = () => {
   const { currentUser, isLoading } = useAuthContext();
-
-  const [currentstep, setCurrentStep] = useState<number>(1);
-
+  const [currentstep, setCurrentStep] = useState<number>(3);
   const router = useRouter();
-  if (!currentUser) {
-    router.back();
-  }
+
+  useEffect(() => {
+    if (!currentUser) {
+      router.back();
+    }
+  }, [currentUser, router]);
 
   const handleStepPlus = () => {
-    if (currentstep < 4) {
+    if (currentstep === 3) {
+      router.push("/");
+    }
+    if (currentstep < 3) {
       setCurrentStep((e) => e + 1);
     }
   };
@@ -28,13 +32,14 @@ const MyCard = () => {
   };
 
   return (
-    <div className="flex flex-col mt-7">
-      {currentstep == 1 && <FirstStep next={handleStepPlus} />}
-      {currentstep == 2 && (
+    <div className="flex flex-col items-center mt-7 h-[790px]">
+      {currentstep === 1 && <FirstStep next={handleStepPlus} />}
+      {currentstep === 2 && (
         <SecondStep next={handleStepPlus} previous={handleStepMinus} />
       )}
-      {/* {currentstep == 3 && <orderDone next={handleStepPlus} />} */}
+      {currentstep === 3 && <OrderDone next={handleStepPlus} />}
     </div>
   );
 };
+
 export default MyCard;

@@ -33,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/product/getProducts")
+      .get("http://localhost:8001/product/getProducts")
       .then(function (response) {
         const fetchedProducts = response.data.products;
         setProducts(fetchedProducts);

@@ -34,10 +34,8 @@ export default function RootLayout({
       >
         <div className="flex flex-col min-h-screen justify-between">
           <AuthProvider>
-            <div className="w-full container mx-auto">
-              <Header />
-              <NuqsAdapter> {children}</NuqsAdapter>
-            </div>
+            <Header />
+            <NuqsAdapter> {children}</NuqsAdapter>
           </AuthProvider>
           <Footer />
         </div>

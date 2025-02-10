@@ -21,7 +21,7 @@ const LikedProducts = (likedProducts: string[]) => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8000/product/getLikedProducts", {
+        .post("http://localhost:8001/product/getLikedProducts", {
           likedProducts,
         })
         .then(function (response) {

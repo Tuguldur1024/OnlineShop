@@ -19,18 +19,60 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
   const [cart, setCard] = useState<IdQuantity[]>([]);
   const { currentUser, isLoading } = useAuthContext();
 
-  console.log(currentUser);
-
   const [userName, setUserName] = useState<string>("");
-
+  const [firstName, setFirstName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [secondPhoneNumber, setSecondPhoneNumber] = useState<string>("");
   const [totalValue, setTotalValue] = useState<number>(0);
+
+  const pay = async () => {
+    console.log("hehe");
+    if (userName === "") {
+      alert("Хэрэглэгчийн нэрээ оруулна уу");
+      return;
+    }
+    if (address === "") {
+      alert("Хаягаа оруулна уу");
+      return;
+    }
+    if (secondPhoneNumber === "") {
+      alert("Утасны дугаараа оруулна уу");
+      return;
+    }
+    if (firstName === "") {
+      alert("Овгоо оруулна уу");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:8001/order/createOrder",
+        {
+          userId: currentUser,
+          secondPhoneNumber,
+          firstName,
+          lastName: userName,
+          details: cart,
+          address,
+          totalAmount: totalValue,
+        }
+      );
+      if (response.status === 200) {
+        next();
+      } else {
+        alert("Захиалга үүсэхэд алдаа гарлаа. Та дахин оролдоно уу");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     try {
       const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCard(currentCart);
       axios
-        .post("http://localhost:8000/product/getCardValue", { currentCart })
+        .post("http://localhost:8001/product/getCardValue", { currentCart })
         .then(function (response) {
           setTotalValue(response.data.totalValue);
         })
@@ -42,9 +84,8 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
     }
     try {
       axios
-        .post("http://localhost:8000/user/getUserById", { id: currentUser })
+        .post("http://localhost:8001/user/getUserById", { id: currentUser })
         .then(function (response) {
-          console.log(response);
           setUserName(response.data.user.userName);
         })
         .catch(function (error) {
@@ -55,7 +96,9 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
     }
   }, []);
 
-  if (isLoading) return <p> ...Loading bro </p>;
+  if (isLoading) {
+    return <p> ...Loading bro </p>;
+  }
   return (
     <div className="flex flex-col gap-16 items-center justify-center mt-7 mb-20">
       <div className="flex items-center">
@@ -94,11 +137,16 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <p className="text-[#09090B] font-medium text-sm">Овог:</p>
-              <input className="w-full rounded-2xl shadow-sm border border-[#E4E4E7] bg-[#FFFFFF]" />
+              <input
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="w-full rounded-2xl shadow-sm border py-1 px-3 border-[#E4E4E7] bg-[#FFFFFF]"
+              />
             </div>
             <div className="flex flex-col gap-2">
               <p className="text-[#09090B] font-medium text-sm">Нэр:</p>
               <input
+                onChange={(e) => setUserName(e.target.value)}
                 defaultValue={userName}
                 className="w-full rounded-2xl shadow-sm border border-[#E4E4E7] py-1 px-3 bg-[#FFFFFF]"
               />
@@ -107,17 +155,29 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
               <p className="text-[#09090B] font-medium text-sm">
                 Утасны дугаар:
               </p>
-              <input className="w-full rounded-2xl shadow-sm border border-[#E4E4E7] bg-[#FFFFFF]" />
+              <input
+                value={secondPhoneNumber}
+                onChange={(e) => setSecondPhoneNumber(e.target.value)}
+                className="w-full rounded-2xl shadow-sm border border-[#E4E4E7] py-1 px-3 bg-[#FFFFFF]"
+              />
             </div>
             <div className="flex flex-col gap-2">
               <p className="text-[#09090B] font-medium text-sm">Хаяг:</p>
-              <input className="w-full rounded-2xl shadow-sm border border-[#E4E4E7] h-[94px] bg-[#FFFFFF]" />
+              <input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="w-full rounded-2xl shadow-sm border justify-start items-start py-1 px-3 border-[#E4E4E7] bg-[#FFFFFF]"
+              />
             </div>
             <div className="flex flex-col gap-2">
               <p className="text-[#09090B] font-medium text-sm">
                 Нэмэлт мэдээлэл:
               </p>
-              <input className="w-full rounded-2xl shadow-sm border border-[#E4E4E7] h-[66px] bg-[#FFFFFF]" />
+              <input
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full rounded-2xl shadow-sm border border-[#E4E4E7] py-1 px-3 bg-[#FFFFFF]"
+              />
               <p className="text-[#71717A] text-xs">
                 Хүргэлттэй холбоотой нэмэлт мэдээлэл үлдээгээрэй
               </p>
@@ -131,7 +191,9 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
               Буцах
             </button>
             <button
-              onClick={next}
+              onClick={() => {
+                pay();
+              }}
               className="bg-[#2563EB] py-2 px-9 text-[#FAFAFA] font-medium rounded-3xl shadow-sm border border-[#E4E4E7] flex items-center"
             >
               Төлбөр төлөх

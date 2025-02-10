@@ -27,7 +27,7 @@ const CartProduct = (props: IdQuantity) => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8000/product/getProductById", { id: productId })
+        .post("http://localhost:8001/product/getProductById", { id: productId })
         .then(function (response) {
           setMyProduct(response.data.product);
         })
