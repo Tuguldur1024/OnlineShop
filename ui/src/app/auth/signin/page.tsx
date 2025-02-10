@@ -69,7 +69,12 @@ const SignIn = () => {
         >
           Нэвтрэх
         </button>
-        <button className="underline  decoration-solid">Нууц үг мартсан</button>
+        <button
+          onClick={() => router.push("/recoverpassword")}
+          className="underline  decoration-solid"
+        >
+          Нууц үг мартсан
+        </button>
       </div>
       <button className="w-full flex items-center py-2 text-[#2563EB] justify-center rounded-3xl bg-[#FFFFFF] border border-[#2563EB] shadow-sm">
         Бүртгүүлэх
