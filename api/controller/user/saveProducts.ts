@@ -32,7 +32,6 @@ export const saveProducts = async (req: Request, res: Response) => {
         { $addToSet: { savedProducts: castedProductId } },
         { new: true }
       ).populate({ path: "savedProducts" });
-      console.log(updatedUser);
       res.status(200).send({ message: updatedUser });
     }
   } catch (error) {

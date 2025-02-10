@@ -29,7 +29,6 @@ const sendOtpEmail = async (email: string, otp: string) => {
 
 export const generateAndSendOtp = async (req: Request, res: Response) => {
   const { email } = req.body;
-  console.log("irj baina");
   const otp = generateOtp();
   const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
   try {

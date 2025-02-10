@@ -9,12 +9,10 @@ export const signIn = async (req: Request, res: Response) => {
 
   try {
     const user = await UserModel.findOne({ email });
-
     if (!user) {
       res.status(400).json({ message: "user not found" });
       return;
     }
-
     const isMatchedPassword = await bcrypt.compare(password, user.password);
 
     if (!isMatchedPassword) {

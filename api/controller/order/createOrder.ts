@@ -1,14 +1,27 @@
 import { Request, Response } from "express";
 import OrderModel from "../../model/order.model";
-import OrderDetailsModel from "../../model/orderDetails.model";
-import { OrderDetails } from "../../model/orderDetails.model";
 
 export const createOrder = async (req: Request, res: Response) => {
-  const { userId, OrderDetails } = req.body;
+  const {
+    userId,
+    firstName,
+    lastName,
+    secondPhoneNumber,
+    address,
+    details,
+    totalAmount,
+  } = req.body;
   try {
-    const orderItems = await OrderDetailsModel.insertMany<OrderDetails>(
-      OrderDetails
-    );
+    const newOrder = await OrderModel.create({
+      userId,
+      secondPhoneNumber,
+      firstName,
+      lastName,
+      address,
+      details,
+      totalAmount,
+    });
+    res.status(200).json({ message: newOrder });
   } catch (error) {
     res.status(400).json({ message: error });
   }
