@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 
 export const getProductById = async (req: Request, res: Response) => {
   const { id } = req.body;
-  console.log(id);
   try {
     const convertedId = mongoose.Types.ObjectId.createFromHexString(id);
     const product = await ProductModel.findById({ _id: convertedId });

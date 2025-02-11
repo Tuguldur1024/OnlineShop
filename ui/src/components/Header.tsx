@@ -9,9 +9,26 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "@/providers/AuthProviders";
 import axios from "axios";
 
+type Product = {
+  productName: string;
+  categoryId: string;
+  price: number;
+  quantity: number;
+  thumbnails: string;
+  images: string[];
+  coupon: string;
+  salePercent: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 const Header = (): JSX.Element => {
   const { currentUser, isLoading, logout } = useAuthContext();
   const [numberOfLoved, setNumberOfLoved] = useState<number>(0);
+
+  const [searchName, setSearchName] = useState<string>("");
+  const [searchedProducts, setSearchedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     if (currentUser) {
@@ -25,6 +42,22 @@ const Header = (): JSX.Element => {
       setNumberOfLoved(0);
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8001/product/searchProducts",
+          { name: searchName }
+        );
+        console.log(response);
+        // setSearchedProducts(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [searchName]);
 
   return (
     <div className="bg-black">
@@ -47,6 +80,8 @@ const Header = (): JSX.Element => {
         <div className="flex gap-2 rounded-2xl bg-[#18181B] px-4 py-2">
           <FinderGlass />
           <input
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
             placeholder="Бүтээгдэхүүн хайх"
             className="bg-[#18181B] text-white"
           />

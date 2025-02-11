@@ -17,11 +17,17 @@ type Order = {
 export type OrderDetails = {
   productId: string;
   quantity: Number;
+  price: Number;
+  images: string[];
+  name: string;
 };
 
 const OrderDetailsSchema = new Schema<OrderDetails>({
   productId: { type: String, required: true },
   quantity: { type: Number, required: true },
+  price: { type: Number, required: true },
+  images: { type: [String] },
+  name: { type: String },
 });
 
 const OrderSchema = new Schema<Order>({
