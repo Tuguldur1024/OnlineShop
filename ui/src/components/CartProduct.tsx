@@ -5,6 +5,8 @@ import Trash from "../../public/icons/trash";
 type IdQuantity = {
   productId: string;
   quantity: number;
+  price: number;
+  images: string[];
 };
 type Product = {
   productName: string;

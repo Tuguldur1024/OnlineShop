@@ -29,6 +29,14 @@ type StarRatingProps = {
   totalReviews: number;
 };
 
+type cartType = {
+  productId: string;
+  quantity: number;
+  price: number;
+  images: string[];
+  name: string;
+};
+
 const ProductDetail = () => {
   const searchParams = useSearchParams();
   const productId = searchParams.get("ProductId");
@@ -86,13 +94,19 @@ const ProductDetail = () => {
       const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
       const existingProductIndex = currentCart.findIndex(
-        (item) => item.productId === productId
+        (item: cartType) => item.productId === productId
       );
 
       if (existingProductIndex !== -1) {
         currentCart[existingProductIndex].quantity += quantity;
       } else {
-        currentCart.push({ productId, quantity });
+        currentCart.push({
+          productId,
+          quantity,
+          price: product?.price,
+          images: product?.images,
+          name: product?.productName,
+        });
       }
 
       localStorage.setItem("cart", JSON.stringify(currentCart));

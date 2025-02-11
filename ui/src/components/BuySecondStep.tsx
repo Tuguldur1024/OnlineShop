@@ -8,6 +8,8 @@ import { useAuthContext } from "@/providers/AuthProviders";
 type IdQuantity = {
   productId: string;
   quantity: number;
+  price: number;
+  images: string[];
 };
 
 type StepProps = {
@@ -58,6 +60,7 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
         }
       );
       if (response.status === 200) {
+        localStorage.removeItem("cart");
         next();
       } else {
         alert("Захиалга үүсэхэд алдаа гарлаа. Та дахин оролдоно уу");

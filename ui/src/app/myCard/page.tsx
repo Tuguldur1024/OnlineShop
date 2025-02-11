@@ -4,11 +4,11 @@ import FirstStep from "@/components/BuyFirstStep";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import SecondStep from "@/components/BuySecondStep";
-import OrderDone from "@/components/OrderDone";
+import OrderDone from "@/components/orderDone";
 
 const MyCard = () => {
   const { currentUser, isLoading } = useAuthContext();
-  const [currentstep, setCurrentStep] = useState<number>(3);
+  const [currentstep, setCurrentStep] = useState<number>(1);
   const router = useRouter();
 
   useEffect(() => {

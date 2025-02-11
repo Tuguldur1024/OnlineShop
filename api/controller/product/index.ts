@@ -6,3 +6,4 @@ export * from "./getProductById";
 export * from "./getProductsByCategory";
 export * from "./getLikedProducts";
 export * from "./getCardValue";
+export * from "./searchProducts";
