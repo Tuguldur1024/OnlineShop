@@ -20,6 +20,8 @@ type Product = {
   updatedAt: Date;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 export const SecondStepProduct = (props: IdQuantity) => {
   const { productId, quantity } = props;
 
@@ -27,7 +29,7 @@ export const SecondStepProduct = (props: IdQuantity) => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8001/product/getProductById", { id: productId })
+        .post(`${API_URL}/product/getProductById`, { id: productId })
         .then(function (response) {
           setMyProduct(response.data.product);
         })
@@ -38,7 +40,7 @@ export const SecondStepProduct = (props: IdQuantity) => {
       console.log(error);
     }
   }, [productId]);
-  const value = myProduct?.price * quantity;
+  const value = myProduct !== undefined && myProduct?.price * quantity;
   return (
     <div className="w-[285px] flex gap-6">
       <div

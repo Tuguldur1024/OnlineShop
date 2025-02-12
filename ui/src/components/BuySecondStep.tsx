@@ -17,6 +17,8 @@ type StepProps = {
   previous: () => void;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
   const [cart, setCard] = useState<IdQuantity[]>([]);
   const { currentUser, isLoading } = useAuthContext();
@@ -47,18 +49,15 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
       return;
     }
     try {
-      const response = await axios.post(
-        "http://localhost:8001/order/createOrder",
-        {
-          userId: currentUser,
-          secondPhoneNumber,
-          firstName,
-          lastName: userName,
-          details: cart,
-          address,
-          totalAmount: totalValue,
-        }
-      );
+      const response = await axios.post(`${API_URL}/order/createOrder`, {
+        userId: currentUser,
+        secondPhoneNumber,
+        firstName,
+        lastName: userName,
+        details: cart,
+        address,
+        totalAmount: totalValue,
+      });
       if (response.status === 200) {
         localStorage.removeItem("cart");
         next();
@@ -75,7 +74,7 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
       const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCard(currentCart);
       axios
-        .post("http://localhost:8001/product/getCardValue", { currentCart })
+        .post(`${API_URL}/product/getCardValue`, { currentCart })
         .then(function (response) {
           setTotalValue(response.data.totalValue);
         })
@@ -87,7 +86,7 @@ const SecondStep: React.FC<StepProps> = ({ next, previous }) => {
     }
     try {
       axios
-        .post("http://localhost:8001/user/getUserById", { id: currentUser })
+        .post(`${API_URL}/user/getUserById`, { id: currentUser })
         .then(function (response) {
           setUserName(response.data.user.userName);
         })

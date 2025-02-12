@@ -10,7 +10,12 @@ type StepProps = {
 type IdQuantity = {
   productId: string;
   quantity: number;
+  name: string;
+  images: string[];
+  price: number;
 };
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 const FirstStep: React.FC<StepProps> = ({ next }) => {
   const [cart, setCard] = useState<IdQuantity[]>([]);
@@ -22,7 +27,7 @@ const FirstStep: React.FC<StepProps> = ({ next }) => {
       const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCard(currentCart);
       axios
-        .post("http://localhost:8001/product/getCardValue", { currentCart })
+        .post(`${API_URL}/product/getCardValue`, { currentCart })
         .then(function (response) {
           setTotalValue(response.data.totalValue);
         })

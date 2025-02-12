@@ -4,6 +4,9 @@ import BigProduct from "@/components/BigProduct";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 type ProductType = {
   categoryId: string;
   coupon: string;
@@ -33,7 +36,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8001/product/getProducts")
+      .get(`${API_URL}/product/getProducts`)
       .then(function (response) {
         const fetchedProducts = response.data.products;
         setProducts(fetchedProducts);

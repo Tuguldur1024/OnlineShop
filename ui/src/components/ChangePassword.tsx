@@ -3,6 +3,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { VerifyOtpProps } from "./VerifyOtp";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 export const ChangePassword = ({ email }: VerifyOtpProps) => {
   const router = useRouter();
 
@@ -39,31 +41,29 @@ export const ChangePassword = ({ email }: VerifyOtpProps) => {
     if (passwordOkay === false) {
       return;
     }
-    if (typeof window !== "undefined") {
-      setColorJijigUseg("#71717A");
-      setColorTemdegt("#71717A");
-      setColorTomUseg("#71717A");
-      setColorToo("#71717A");
-      try {
-        axios
-          .post("http://localhost:8001/user/updatePassword", {
-            email,
-            password,
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              alert("Амжилттай өөрчлөгдлөө");
-              router.push("/auth/signin");
-            } else {
-              alert("Амжилтгүй боллоо дахин оролдоно уу");
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+    setColorJijigUseg("#71717A");
+    setColorTemdegt("#71717A");
+    setColorTomUseg("#71717A");
+    setColorToo("#71717A");
+    try {
+      axios
+        .post(`${API_URL}/user/updatePassword`, {
+          email,
+          password,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            alert("Амжилттай өөрчлөгдлөө");
+            router.push("/auth/signin");
+          } else {
+            alert("Амжилтгүй боллоо дахин оролдоно уу");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
   return (

@@ -7,6 +7,8 @@ import { VerifyOtpProps } from "@/components/VerifyOtp";
 import { ChangePassword } from "@/components/ChangePassword";
 import { useAuthContext } from "@/providers/AuthProviders";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 const Home = () => {
   const [email, setEmail] = useState<string>("");
   const [stage, setStage] = useState<number>(0);
@@ -17,7 +19,7 @@ const Home = () => {
       setStage(1);
       // try {
       //   const response = await axios.post(
-      //     "http://localhost:8001/otp/GenerateAndSendOtp",
+      //     `${API_URL}/otp/GenerateAndSendOtp`,
       //     { email }
       //   );
       //   console.log(response);

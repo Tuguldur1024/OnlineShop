@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LikedProducts from "@/components/LikedProducts";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 const LikedProduct = () => {
   const { currentUser, isLoading } = useAuthContext();
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
@@ -11,7 +13,7 @@ const LikedProduct = () => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8001/user/getUserById", { id: currentUser })
+        .post(`${API_URL}/user/getUserById`, { id: currentUser })
         .then(function (response) {
           setLikedProducts(response.data.user.savedProducts);
         })

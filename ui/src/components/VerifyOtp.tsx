@@ -14,6 +14,8 @@ export type VerifyOtpProps = {
   setStage: (stage: number) => void;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 export function VerifyOtp({ email, setStage }: VerifyOtpProps) {
   const [otp, setOtp] = useState<string>("");
   useEffect(() => {
@@ -24,7 +26,7 @@ export function VerifyOtp({ email, setStage }: VerifyOtpProps) {
   const verifyOtp = async () => {
     setStage(2); // odoohondoo status irj chdq baigaa uchraas shuud yvuulchii daraa ni ene muriig avna
     // try {
-    //   const response = await axios.post("http://localhost:8001/otp/VerifyOtp", {
+    //   const response = await axios.post(`${API_URL}/otp/VerifyOtp`, {
     //     email,
     //     otp,
     //   });

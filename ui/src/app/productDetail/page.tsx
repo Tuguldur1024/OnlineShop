@@ -36,6 +36,7 @@ type cartType = {
   images: string[];
   name: string;
 };
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 const ProductDetail = () => {
   const searchParams = useSearchParams();
@@ -57,7 +58,7 @@ const ProductDetail = () => {
     const fetchData = async () => {
       try {
         const productResponse = await axios.post(
-          "http://localhost:8001/product/getProductById",
+          `${API_URL}/product/getProductById`,
           {
             id: productId,
           }
@@ -65,7 +66,7 @@ const ProductDetail = () => {
         setProduct(productResponse.data.product);
         if (productResponse.data.product?.categoryId) {
           const categoryResponse = await axios.post(
-            "http://localhost:8001/product/getProductsByCategory",
+            `${API_URL}/product/getProductsByCategory`,
             {
               categoryId: productResponse.data.product.categoryId,
             }

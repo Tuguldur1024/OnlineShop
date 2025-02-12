@@ -11,8 +11,8 @@ export const Up = () => {
       <path
         d="M4 6L8 10L12 6"
         stroke="#09090B"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -19,19 +19,18 @@ type product = {
   thumbnails: string;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 const Product = ({ productName, price, _id, images }: product) => {
   const { signin, currentUser } = useAuthContext();
 
   const handleLoveClick = async (event: React.MouseEvent) => {
     event.preventDefault();
     if (currentUser) {
-      const updateduser = await axios.post(
-        "http://localhost:8001/user/SaveProducts",
-        {
-          id: currentUser,
-          productId: _id,
-        }
-      );
+      await axios.post(`${API_URL}/user/SaveProducts`, {
+        id: currentUser,
+        productId: _id,
+      });
     }
   };
 

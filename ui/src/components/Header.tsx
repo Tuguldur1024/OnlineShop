@@ -23,6 +23,8 @@ type Product = {
   updatedAt: Date;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 const Header = (): JSX.Element => {
   const { currentUser, isLoading, logout } = useAuthContext();
   const [numberOfLoved, setNumberOfLoved] = useState<number>(0);
@@ -33,7 +35,7 @@ const Header = (): JSX.Element => {
   useEffect(() => {
     if (currentUser) {
       axios
-        .post("http://localhost:8001/user/getUserById", { id: currentUser })
+        .post(`${API_URL}/user/getUserById`, { id: currentUser })
         .then((response) => {
           setNumberOfLoved(response.data.user.savedProducts.length);
         })
@@ -46,10 +48,9 @@ const Header = (): JSX.Element => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8001/product/searchProducts",
-          { name: searchName }
-        );
+        const response = await axios.post(`${API_URL}/product/searchProducts`, {
+          name: searchName,
+        });
         console.log(response);
         // setSearchedProducts(response.data);
       } catch (error) {

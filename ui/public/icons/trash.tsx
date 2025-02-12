@@ -11,8 +11,8 @@ const Trash = () => {
         <path
           d="M11 14H29M27 14V28C27 29 26 30 25 30H15C14 30 13 29 13 28V14M16 14V12C16 11 17 10 18 10H22C23 10 24 11 24 12V14M18 19V25M22 19V25"
           stroke="#09090B"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

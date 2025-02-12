@@ -16,12 +16,14 @@ type Product = {
   updatedAt: Date;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 const LikedProducts = (likedProducts: string[]) => {
   const [myProducts, setMyProducts] = useState<Product[]>([]);
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8001/product/getLikedProducts", {
+        .post(`${API_URL}/product/getLikedProducts`, {
           likedProducts,
         })
         .then(function (response) {

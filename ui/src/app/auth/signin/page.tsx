@@ -5,6 +5,7 @@ import { useAuthContext } from "@/providers/AuthProviders";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +20,7 @@ const SignIn = () => {
     }
     try {
       await axios
-        .post("http://localhost:8001/user/Signin", {
+        .post(`${API_URL}/user/Signin`, {
           email: email,
           password: password,
         })

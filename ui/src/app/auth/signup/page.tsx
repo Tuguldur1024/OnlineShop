@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState, ChangeEvent } from "react";
-import RegisterAlert from "@/components/RegisterAlert";
 import axios from "axios";
 import { useAuthContext } from "@/providers/AuthProviders";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+
 function hasSpecialCharacter(str: string): boolean {
   const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(str);
   return hasSpecialChar;
 }
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 const hasUpperCase = (str: string): boolean => {
   return str.toLowerCase() != str;
@@ -63,7 +65,7 @@ const SignUp = () => {
         return;
       }
       await axios
-        .post("http://localhost:8001/user/SignUp", {
+        .post(`${API_URL}/user/SignUp`, {
           userName: name,
           email: emailAddress,
           password: password,

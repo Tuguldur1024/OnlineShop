@@ -21,6 +21,7 @@ type Product = {
   createdAt: Date;
   updatedAt: Date;
 };
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 const CartProduct = (props: IdQuantity) => {
   const { productId, quantity } = props;
@@ -29,7 +30,7 @@ const CartProduct = (props: IdQuantity) => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:8001/product/getProductById", { id: productId })
+        .post(`${API_URL}/product/getProductById`, { id: productId })
         .then(function (response) {
           setMyProduct(response.data.product);
         })

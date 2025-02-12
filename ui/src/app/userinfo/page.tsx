@@ -28,6 +28,8 @@ export type order = {
   userId: string;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
 const UserInfo = () => {
   const { currentUser } = useAuthContext();
 
@@ -40,7 +42,7 @@ const UserInfo = () => {
     const dataFetch = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8001/order/getOrdersByUserId",
+          `${API_URL}/order/getOrdersByUserId`,
           {
             userId: currentUser,
           }
