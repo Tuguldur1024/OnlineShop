@@ -4,8 +4,7 @@ import BigProduct from "@/components/BigProduct";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 type ProductType = {
   categoryId: string;

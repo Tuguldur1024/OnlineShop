@@ -8,9 +8,9 @@ type props = {
 export const OrderHistoryScroll = ({ order }: props) => {
   return (
     <div className="w-full h-fit flex flex-col gap-3">
-      {order.details.map((oneDetail) => {
+      {order.details.map((oneDetail, index) => {
         return (
-          <div className="flex gap-2">
+          <div key={index} className="flex gap-2">
             <div className="w-9 h-9">
               <img
                 className="w-full h-full"

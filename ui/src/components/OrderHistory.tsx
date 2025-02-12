@@ -15,8 +15,8 @@ export const OrderHistory = ({ orders }: props) => {
       <p className="w-full items-start font-bold text-lg">Захиалгын түүх</p>
       <div className="border border-[#E4E4E7] w-full"></div>
       <div className="w-full flex flex-col gap-4 ">
-        {orders.map((order) => {
-          return <OneOrderHistory order={order} />;
+        {orders.map((order, index) => {
+          return <OneOrderHistory key={index} order={order} />;
         })}
       </div>
     </div>
