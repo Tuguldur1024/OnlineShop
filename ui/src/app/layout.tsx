@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { NuqsAdapter } from "nuqs/adapters/next";
 import { AuthProvider } from "@/providers/AuthProviders";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,8 +35,10 @@ export default function RootLayout({
       >
         <div className="flex flex-col min-h-screen justify-between">
           <AuthProvider>
+            <Suspense>
             <Header />
             <NuqsAdapter> {children}</NuqsAdapter>
+            </Suspense>
           </AuthProvider>
           <Footer />
         </div>
