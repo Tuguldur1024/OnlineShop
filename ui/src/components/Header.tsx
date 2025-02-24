@@ -45,20 +45,20 @@ const Header = (): JSX.Element => {
     }
   }, [currentUser]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(`${API_URL}/product/searchProducts`, {
-          name: searchName,
-        });
-        console.log(response);
-        // setSearchedProducts(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [searchName]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post(`${API_URL}/product/searchProducts`, {
+  //         name: searchName,
+  //       });
+  //       console.log(response);
+  //       // setSearchedProducts(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [searchName]);
 
   return (
     <div className="bg-black">
