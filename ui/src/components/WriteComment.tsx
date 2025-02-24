@@ -22,7 +22,7 @@ export const WriteComment = ({userId, productId , commentCreate, setCommentCreat
     }
     const writeComment =async () =>{
         try{
-            const response =await axios.post("http://localhost:8001/comment/createComment", {userId, productId, star, comment});
+            const response =await axios.post(`${API_URL}/comment/createComment`, {userId, productId, star, comment});
             alert("Амжилттай сэтгэгдэл үлдээлээ.");
             setComment("");
             setStar(0);
@@ -33,6 +33,7 @@ export const WriteComment = ({userId, productId , commentCreate, setCommentCreat
             console.log(error);
         }
     }
+    console.log(star);
 
     return(
         <div className="p-6 flex flex-col gap-6">

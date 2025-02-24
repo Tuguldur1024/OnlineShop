@@ -6,6 +6,7 @@ import productRouter from "./router/product.router";
 import userRouter from "./router/user.router";
 import otpRouter from "./router/otp.router";
 import orderRouter from "./router/order.router";
+import commentRouter from "./router/comment.router";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/product", productRouter);
 app.use("/user", userRouter);
 app.use("/otp", otpRouter);
 app.use("/order", orderRouter);
+app.use("/comment", commentRouter);
 
 connection();
 
