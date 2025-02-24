@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuthContext } from "@/providers/AuthProviders";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 const SignIn = () => {
@@ -13,28 +14,31 @@ const SignIn = () => {
 
   const router = useRouter();
 
+  
   const handleSignIn = async () => {
     if (!email || !password) {
-      alert("Please fill in both fields.");
+      toast.error("Please fill in both fields.");
       return;
     }
     try {
-      await axios
-        .post(`${API_URL}/user/Signin`, {
-          email: email,
-          password: password,
-        })
-        .then(function (response) {
-          signin(response.data.user.id);
-          router.push("/");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      const response = await axios.post(`${API_URL}/user/Signin`, {
+        email,
+        password,
+      });
+      if (response.data.message === "user not found") {
+        toast.error("Оруулсан имэйл хаяг бүхий хэрэглэгч олдсонгүй");
+      } else if (response.data.message === "invalid credentials") {
+        toast.error("Хэрэглэгчийн нууц үг буруу байна");
+      } else {
+        signin(response.data.user.id);
+        toast.success("Амжилттай нэвтэрлээ");
+        router.push("/");
+      }
     } catch (error) {
-      console.log(error);
+      toast.error("Нэвтрэхэд алдаа гарлаа");
     }
   };
+  
 
   if (currentUser) {
     return (

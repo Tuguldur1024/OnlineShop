@@ -6,36 +6,15 @@ import { New } from "@/components/New";
 import LoveReaction from "../../../public/icons/loveReaction";
 import StarRating from "@/components/Rating";
 import Product from "@/components/Product";
+import { ProductType, StarRatingProps, cartType , Comment } from "@/lib/types";
+import { useAuthContext } from "@/providers/AuthProviders";
+import { OneComment } from "@/components/Comment";
+import { WriteComment } from "@/components/WriteComment";
 
 const sizes: string[] = ["S", "M", "L", "XL", "2XL"];
 const images: number[] = [0, 2, 3, 4];
 
-type ProductType = {
-  categoryId: string;
-  coupon: string;
-  createdAt: Date;
-  description: string;
-  images: string[];
-  price: number;
-  productName: string;
-  quantity: number;
-  salePercent: string;
-  _id: string;
-  thumbnails: string;
-};
 
-type StarRatingProps = {
-  rating: number;
-  totalReviews: number;
-};
-
-type cartType = {
-  productId: string;
-  quantity: number;
-  price: number;
-  images: string[];
-  name: string;
-};
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 const ProductDetail = () => {
@@ -46,15 +25,46 @@ const ProductDetail = () => {
   const [selected, setSelected] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedImage, setSelectedImage] = useState<number>(0);
+  const [comments , setComments] = useState<Comment[]>([]);
+
+  const [showComments , setShowComments] = useState<boolean>(false);
 
   const [relativeProducts, setRelativeProducts] = useState<ProductType[]>();
-
   const rating: StarRatingProps = {
     rating: 4.6,
-    totalReviews: 24,
+  };
+  const { signin, currentUser } = useAuthContext();
+
+  
+
+  const handleLoveClick = async (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (currentUser) {
+      await axios.post(`${API_URL}/user/SaveProducts`, {
+        id: currentUser,
+        productId: productId,
+      });
+    }
+    alert("Бүтээгдэхүүнийг хадгаллаа");
   };
 
+  const [commentCreate , setCommentCreate] = useState<boolean>(false);
+
+  useEffect(() =>{
+    const fetchComments = async() =>{
+      try{
+        const response = await axios.post(`http://localhost:8001/comment/getCommentsByProductId`, {productId : productId});
+        setComments(response.data.comments);
+      }catch(error)
+      {
+        console.log(error);
+      }
+    }
+    fetchComments();
+  }, [commentCreate])
+
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
         const productResponse = await axios.post(
@@ -129,8 +139,11 @@ const ProductDetail = () => {
   const plus = () => {
     setQuantity((e) => e + 1);
   };
+  const seeComments = () =>{
+    setShowComments(!showComments);
+  }
   return (
-    <div className="pt-14 mx-auto w-fit flex flex-col gap-20">
+    <div className="pt-14 mx-auto w-fit flex flex-col gap-[22px]">
       <div className="flex gap-5 ">
         <div className="flex flex-col justify-center gap-2">
           {images.map((image, index) => {
@@ -163,7 +176,12 @@ const ProductDetail = () => {
               <p className="font-bold text-2xl text-[#000000]">
                 {product?.productName}
               </p>
-              <LoveReaction />
+              <button
+                className="w-10 h-10 flex items-center justify-center"
+                onClick={handleLoveClick}
+              >
+                <LoveReaction />
+              </button>
             </div>
             <p className="text-base max-w-[511px] text-[#000000]">
               {product?.description}
@@ -220,14 +238,24 @@ const ProductDetail = () => {
           <div className="mt-[39px]">
             <div className="flex gap-4">
               <p>Үнэлгээ</p>
-              <button className="text-[#2563EB] underline">
+              <button onClick={seeComments} className="text-[#2563EB] underline">
                 бүгдийг харах
               </button>
             </div>
-            <StarRating {...rating} />
+            <StarRating {...rating}/>
+            {showComments && (
+              <div className="flex justify-end mt-6 flex-col gap-5">{
+                comments.map((comment, index) => {
+                  return <OneComment key={index} comment={comment}/>
+                  })
+                  
+              } <WriteComment userId ={currentUser || ""} productId= {productId || ""} commentCreate= {commentCreate} setCommentCreate ={setCommentCreate}/>
+              </div>
+          )}
           </div>
         </div>
       </div>
+      
       <div className="flex flex-col gap-6">
         <p className="font-bold text-[#000000] text-3xl">Холбоотой бараа</p>
         <div className="max-w-[1040px] mx-auto gap-x-5 grid grid-cols-4 gap-y-12 items-center justify-center mb-24">

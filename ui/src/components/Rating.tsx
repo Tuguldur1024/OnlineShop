@@ -3,11 +3,10 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 type StarRatingProps = {
   rating: number;
-  totalReviews: number;
 };
 
 const StarRating: React.FC<StarRatingProps> = (props: StarRatingProps) => {
-  const { rating, totalReviews } = props;
+  const { rating } = props;
   const roundedRating = Math.round(rating * 2) / 2;
 
   const renderStars = () => {
@@ -29,7 +28,6 @@ const StarRating: React.FC<StarRatingProps> = (props: StarRatingProps) => {
       <div className="flex">{renderStars()}</div>
       <span className="font-normal flex text-sm text-[#09090B]">
         {rating.toFixed(1)}
-        <p className="text-[#71717A]"> ({totalReviews}) </p>
       </span>
     </div>
   );

@@ -19,6 +19,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 const FirstStep: React.FC<StepProps> = ({ next }) => {
   const [cart, setCard] = useState<IdQuantity[]>([]);
+  const [trashClear ,setTrashClear] = useState<boolean>(false);
 
   const [totalValue, setTotalValue] = useState<number>(0);
 
@@ -37,7 +38,8 @@ const FirstStep: React.FC<StepProps> = ({ next }) => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [trashClear]);
+  console.log(trashClear);
   const handleFirst = () => {
     next();
   };
@@ -65,7 +67,7 @@ const FirstStep: React.FC<StepProps> = ({ next }) => {
       <div className="flex flex-col gap-4 p-8 rounded-2xl bg-[#F7F7F8]">
         <p className="font-bold text-xl">1. Сагс</p>
         {cart.map((oneItem, index) => {
-          return <CartProduct key={index} {...oneItem} />;
+          return <CartProduct  key={index} {...oneItem} trashClear = {trashClear} setTrashClear={setTrashClear} />;
         })}
       </div>
       <div className="flex justify-between w-[574px] mb-2">

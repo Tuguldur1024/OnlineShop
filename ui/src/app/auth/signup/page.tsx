@@ -5,6 +5,7 @@ import axios from "axios";
 import { useAuthContext } from "@/providers/AuthProviders";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast"
 
 function hasSpecialCharacter(str: string): boolean {
   const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(str);
@@ -78,6 +79,7 @@ const SignUp = () => {
           console.log(error);
         });
       router.push("/auth/signin");
+      toast.success("Амжилттай бүргүүллээ");
     }
   };
   const handleName = (event: ChangeEvent<HTMLInputElement>) => {
